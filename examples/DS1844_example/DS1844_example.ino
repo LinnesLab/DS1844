@@ -53,9 +53,9 @@ void loop() {
       brightness[i]++;                  //Increment brightness
       ds1844.write(i, brightness[i]);   //Write the brightness to the selected potentiometer
       readout = ds1844.read(i);         //Display the newly written value to the serial monitor
-      Serial.print((readout >> 6), DEC);
+      Serial.print((readout >> 6), DEC); //prints potentiometer number (0-3)
       Serial.print(",");
-      Serial.println(readout & (0x3F));
+      Serial.println(readout & (0x3F)); //prints potentiometer setting (0-63)
       delay(50);
     }
   }
