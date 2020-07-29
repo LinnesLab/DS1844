@@ -53,15 +53,26 @@ void DS1844::write(int16_t pot, int16_t value) {    //value is between 0 and 63
   Wire.endTransmission();
 }
 
-int16_t DS1844::read(int16_t pot) {
-  int16_t PotRead[4];
-  int16_t j = 0;
-  int16_t address = this->address;
-  Wire.requestFrom(address, 4);
-  while (Wire.available()) {
-   PotRead[j] = Wire.read();
-   j++;
-  }
-  
-  return PotRead[pot];
+
+int16_t DS1844::read(int16_t pot)
+{
+	int16_t PotRead[4];
+	int16_t j = 0;
+	int16_t address = this->address;
+	
+	
+	Wire.requestFrom(address, 4);
+	while (Wire.available())
+	{
+		PotRead[j] = Wire.read();
+		j++;
+	}
+	
+
+	//moving bits by 2 based on comment from Reddit user: AGeekNamedRoss
+	//https://www.reddit.com/r/arduino/comments/99dxe2/digital_potentiometer_ds1844_with_arduino/
+	//Another GitHub user also noticed this problem
+	//https://github.com/RossJacobs/DS1844
+	return (PotRead[pot] & (0x3F));
 }
+
