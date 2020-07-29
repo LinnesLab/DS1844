@@ -23,9 +23,9 @@
 #include <DS1844.h>
 #include <Wire.h>
 
-int brightness[4];         //This creates a 4 element array for the brightness values of the 4 LEDS
-int readout;               //This is the DS1844's returned value
-const int address = 0x28;  //This is the address of the DS1844 chip with all three address pins grounded.
+int16_t brightness[4];         //This creates a 4 element array for the brightness values of the 4 LEDS
+int16_t readout;               //This is the DS1844's returned value
+const int16_t address = 0x28;  //This is the address of the DS1844 chip with all three address pins grounded.
 
 /*
 Addresses for common configurations of address pins:
@@ -46,7 +46,7 @@ void setup() {
 void loop() {
   
   //Increment through the potentiometers
-  for (int i = 0; i <= 3; i++) {
+  for (int16_t i = 0; i <= 3; i++) {
                                         //NOTE: DS1844 RANGE IS 0-63 (6 bit integer) 
     while (brightness[i] <63) {
       brightness[i]++;                  //Increment brightness
@@ -61,7 +61,7 @@ void loop() {
   delay(1000);
   
   //Turn all pots back to zero
-  for (int i = 0; i <= 3; i++) {
+  for (int16_t i = 0; i <= 3; i++) {
       ds1844.write(i, 0);
       brightness[i] = 0;
   }

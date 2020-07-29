@@ -2,14 +2,24 @@
   DS1844.h - Library for controlling a Maxim Integrated DS1844 Quad Digital Potentiometer
   Created by Matt Westwick; March 23, 2013
   Released into the public domain.
+ 
+ 
+ UPDATES
+ 2020/07/29:1544> (UTC-5)
+ 			- changed "int" to "int16_t". int is a signed 4-byte value on Arduino
+ 			Due and SAMD boards, while int is a signed 2-byte value on ATmega-
+ 			based boards which could cause some inconsistent behavior across
+ 			different architectures. (editor: Orlando S. Hoilett).
 */
+
+
 
 #include "Arduino.h"
 #include "Wire.h"
 #include "DS1844.h"
 
 
-DS1844::DS1844(int address)
+DS1844::DS1844(int16_t address)
 {
   Wire.begin();
   this->address=address;
@@ -22,7 +32,7 @@ DS1844::DS1844(int address)
   */
 }
 
-void DS1844::write(int pot, int value) {    //value is between 0 and 63
+void DS1844::write(int16_t pot, int16_t value) {    //value is between 0 and 63
   
   if (value > 63) {  //prevents values that are too large from overwriting address bits
   value = 63;
@@ -43,10 +53,10 @@ void DS1844::write(int pot, int value) {    //value is between 0 and 63
   Wire.endTransmission();
 }
 
-int DS1844::read(int pot) {
-  int PotRead[4];
-  int j = 0;
-  int address = this->address;
+int16_t DS1844::read(int16_t pot) {
+  int16_t PotRead[4];
+  int16_t j = 0;
+  int16_t address = this->address;
   Wire.requestFrom(address, 4);
   while (Wire.available()) {
    PotRead[j] = Wire.read();

@@ -11,11 +11,11 @@
 
 class DS1844
 {
-  int address;
+  int16_t address;
   public:
-    DS1844(int address);
-    void write(int pot, int value);
-    int read(int pot);
+    DS1844(int16_t address);
+    void write(int16_t pot, int16_t value);
+    int16_t read(int16_t pot);
   //private:
     //int _address;
 };
