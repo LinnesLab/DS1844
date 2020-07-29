@@ -41,6 +41,7 @@ DS1844 ds1844(address);
 void setup() {
   //Start serial communication
   Serial.begin(9600);
+  Wire.begin();
 }
 
 void loop() {
